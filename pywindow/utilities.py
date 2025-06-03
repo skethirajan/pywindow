@@ -1142,14 +1142,17 @@ def vector_preanalysis(vector, coordinates, elements_vdw, increment=1.0):
 def optimise_xy(xy, *args):
     """Return negative pore diameter for x and y coordinates optimisation."""
     z, elements, coordinates = args
-    window_com = np.array([xy[0], xy[1], z])
+    # window_com = np.array([xy[0], xy[1], z])
+    window_com = np.array([xy[0], xy[1], z.item()])  # Ensure scalar
     return -pore_diameter(elements, coordinates, com=window_com)[0]
 
 
 def optimise_z(z, *args):
     """Return pore diameter for coordinates optimisation in z direction."""
     x, y, elements, coordinates = args
-    window_com = np.array([x, y, z])
+    # Extract scalar value from z (which may be a 1-element array)
+    window_com = np.array([x, y, z.item()])  # or z[0] or np.squeeze(z)
+    # window_com = np.array([x, y, z])
     return pore_diameter(elements, coordinates, com=window_com)[0]
 
 
