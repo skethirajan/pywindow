@@ -475,6 +475,8 @@ def opt_pore_diameter(elements, coordinates, bounds=None, com=None, **kwargs):
         com = center_of_mass(elements, coordinates)
     if bounds is None:
         pore_r = pore_diameter(elements, coordinates, com=com)[0] / 2
+        # Ensure pore_r is non-negative to prevent invalid bounds
+        pore_r = max(pore_r, 0.0)
         bounds = (
             (com[0]-pore_r, com[0]+pore_r),
             (com[1]-pore_r, com[1]+pore_r),
